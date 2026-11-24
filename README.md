@@ -1,56 +1,76 @@
-Name: Task Tracker(You can update to any name of your choice)
+# Task Helper
 
-Ezeude Godson Onyedika
+A lightweight desktop task manager built with Python, Tkinter, and SQLite. Tasks are stored locally on your computer.
 
-A simple desktop task management application for managing Daily Tasks.
+## Features
 
+- Create, view, edit, and delete tasks
+- Store a description and optional due date
+- Toggle tasks between **Pending** and **Completed**
+- Persist data in a local SQLite database
+- Use the database module independently of the graphical interface
 
+## Requirements
 
+- Python 3.10 or newer (standard library only)
+- Tkinter, usually included with Python; on some Linux distributions install the OS package `python3-tk`
 
-Features(Basic Idea of the components)
+No third-party Python packages are required.
 
-Add tasks
-View tasks
-Modify/update tasks
-Delete tasks
-Mark tasks as completed
-Change completed tasks back to pending
-Add descriptions
-Add due dates
-Persistent SQLite storage(For the developer)
+## Run locally
 
+Clone the repository and enter its directory:
 
+```bash
+git clone https://github.com/Godson47/Task-Helper.git
+cd Task-Helper
+python app.py
+```
 
-Requirements
+On systems where Python 3 is invoked as `python3`, use `python3 app.py`.
 
-Python 3.x(Version should be 3 and above)
-Tkinter
-SQLite
+The application creates `tasks.db` on first use. The database is local to the machine and is intentionally excluded from version control. To choose a different database path, set `TASK_HELPER_DB` before launching the app:
 
+```bash
+# macOS/Linux
+TASK_HELPER_DB="$HOME/.task-helper/tasks.db" python app.py
 
+# PowerShell
+$env:TASK_HELPER_DB = "$HOME\.task-helper\tasks.db"
+python app.py
+```
 
-How to Run(Follow step by step)
+Ensure the parent directory exists before using a custom database path.
 
-Note: Make sure each step is completed before moving to the next step
+## Run tests
 
-Open a terminal in the folder and run:
+The persistence layer has regression tests and requires no third-party test runner:
 
-python app.py(this is the command to run)
+```bash
+python -m unittest discover -s tests -v
+```
 
+Tests use a temporary database and do not modify your personal task data.
 
+## Data and limitations
 
-The tasks.db file will be created automatically the first time the app runs.(This is where the database is located).It runs locally on your device.
+- This is a **desktop application**, not a web service; it is not deployed to Vercel or another web host.
+- The SQLite file contains your task data. Back it up before moving or reinstalling the application.
+- Do not commit `tasks.db`, Python bytecode, virtual environments, or secrets.
+- Dates are currently stored as text. Enter dates consistently (recommended: `YYYY-MM-DD`).
 
+## Project structure
 
+```text
+Task-Helper/
+├── app.py              # Tkinter user interface
+├── database.py         # SQLite persistence and validation
+├── tests/
+│   └── test_database.py
+├── .gitignore
+└── README.md
+```
 
-Running on Github
+## License
 
-Run the below in the terminal of your folder
-
-git init
-git add .
-git commit -m "Initial Task Helper application"
-git branch -M main
-git remote add origin https://github.com/Godson47/Task_Tracker.git
-git push -u origin main
-
+See [LICENSE](LICENSE) if one is added to this repository.
